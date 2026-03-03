@@ -20,7 +20,7 @@ class RetroCompanion:
         # Make the window stay on top and remove the border for a 'sprite' look
         self.root.attributes("-topmost", True)
         self.root.overrideredirect(True)
-        self.root.geometry("200x200+2100+200") # Window size + Position offset
+        self.root.geometry("200x200+1700+360") # Window size + Position offset
 
         # State variables
         self.mood = "Neutral"
@@ -51,7 +51,7 @@ class RetroCompanion:
             "More_Gay": "(owo)",
             "Tired": "(=_=)",
             "Excited": "(*o*)",
-            "Stare": "(o o)"
+            "Stare": "(o  o)"
         }
 
         faces_blink = {
@@ -68,7 +68,7 @@ class RetroCompanion:
             "More_Gay": "(-w-)",
             "Tired": "(-,-)",
             "Excited": "(-o-)",
-            "Stare": "(- -)"
+            "Stare": "(-  -)"
         }
 
         # If in blink state, return face derived from mood,

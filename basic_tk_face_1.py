@@ -14,7 +14,6 @@ bunny_ears = r"( \_/ )" # "( \_/ )" for floppy ears
 import tkinter as tk
 import random
 
-
 class RetroCompanion:
     def __init__(self, root):
         self.root = root
@@ -71,7 +70,7 @@ class RetroCompanion:
         faces = {
             "Neutral": "(o_o)",
             "Happy": "(^ V ^)",
-            "Unhappy": "(; _ ;)",
+            "Unhappy": "( ;_; )",
             "Angry": "(>_<)",
             "Bored": "(~_~)",
             "Confused": "(o.o)",
@@ -128,8 +127,8 @@ class RetroCompanion:
         self.mood = random.choice(["Neutral", "Happy", "Unhappy", "Angry", "Bored", "Confused", "Shocked", "Tweaked", "Pleased", "Gay", "More_Gay", "Tired", "Excited", "Stare", "Sad", "Sad_Despair", "Happy_Bun", "Ecstatic_Bun"])
         self.label.config(text=self.get_face())
 
-        # Run again in 5 seconds
-        self.root.after(5000, self.update_logic)
+        # Run again in 4 to 8 seconds
+        self.root.after(random.randint(4000, 8000), self.update_logic)
 
     def blink_loop(self):
         """Handles the 'Procedural' animation of blinking"""
@@ -140,7 +139,6 @@ class RetroCompanion:
         # If open, stay open for a random longer time (2-4s)
         duration = 200 if self.blink_state else random.randint(2000, 4000)
         self.root.after(duration, self.blink_loop)
-
 
 # Run it
 if __name__ == "__main__":

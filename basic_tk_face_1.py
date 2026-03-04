@@ -56,7 +56,7 @@ class RetroCompanion:
 
         faces_blink = {
             "Neutral": "(-_-)",
-            "Happy": "(-V-)",
+            "Happy": "(-v-)",
             "Sad": "(-_-)",
             "Angry": "(-_-)",
             "Bored": "(-_-)",
@@ -66,7 +66,7 @@ class RetroCompanion:
             "Pleased": "(-u-)",
             "Gay": "(-w-)",
             "More_Gay": "(-w-)",
-            "Tired": "(-,-)",
+            "Tired": "(- , -)",
             "Excited": "(-o-)",
             "Stare": "(-  -)"
         }

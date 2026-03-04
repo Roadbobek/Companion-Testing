@@ -55,7 +55,9 @@ class RetroCompanion:
             "Excited": "(*o*)",
             "Stare": "(o  o)",
             "Sad": "(OnO)",
-            "Sad_Despair": "(. n .)"
+            "Sad_Despair": "(. n .)",
+            "Happy_Bun": "(o ^ o)",
+            "Ecstatic_Bun": "(O^O)"
         }
 
         faces_blink = {
@@ -74,7 +76,9 @@ class RetroCompanion:
             "Excited": "(-o-)",
             "Stare": "(-  -)",
             "Sad": "(-n-)",
-            "Sad_Despair": "(-n-)"
+            "Sad_Despair": "(-n-)",
+            "Happy_Bun": "(- ^ -)",
+            "Ecstatic_Bun": "(- ^ -)"
 
         }
 
@@ -88,7 +92,7 @@ class RetroCompanion:
     def update_logic(self):
         """Simulates the companion 'thinking' and changing moods"""
         # Pick a random mood every 5 seconds
-        self.mood = random.choice(["Neutral", "Happy", "Unhappy", "Angry", "Bored", "Confused", "Shocked", "Tweaked", "Pleased", "Gay", "More_Gay", "Tired", "Excited", "Stare", "Sad", "Sad_Despair"])
+        self.mood = random.choice(["Neutral", "Happy", "Unhappy", "Angry", "Bored", "Confused", "Shocked", "Tweaked", "Pleased", "Gay", "More_Gay", "Tired", "Excited", "Stare", "Sad", "Sad_Despair", "Happy_Bun", "Ecstatic_Bun"])
         self.label.config(text=self.get_face())
 
         # Run again in 5 seconds

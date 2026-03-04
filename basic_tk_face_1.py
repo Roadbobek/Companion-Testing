@@ -2,9 +2,11 @@
 face_colour = "green3"
 background_colour = "black"
 face_font = "Small Fonts"
+bunny_ears_toggle = True
+bunny_ears = r"( \_/ )" # "( \_/ )" for floppy ears
 # Use "MV Boli" for a hand-drawn look,
-# Use "Small Fonts" for a retro pixelated look,
-# Use "Courier" or "DejaVu Sans Mono" for a regular font look.
+# Use "Small Fonts", "Fixedsys" or "Terminal" for a retro pixelated look,
+# Use "Courier", "DejaVu Sans Mono" or "Consolas" for a regular font look.
 # All Colours: https://inventwithpython.com/blog/complete-list-tkinter-colors-valid-and-tested.html
 # ALl Fonts: Run 'all_tkinter_fonts.py'
 
@@ -27,7 +29,7 @@ class RetroCompanion:
         self.blink_state = False
 
         # UI Element (The Face)
-        self.label = tk.Label(root, text="(=_=)", font=(face_font, 40), fg=face_colour, bg=background_colour)
+        self.label = tk.Label(root, text="(o.o)", font=(face_font, 40), fg=face_colour, bg=background_colour, justify="center")
         self.label.pack(expand=True, fill="both")
 
         # Start the "Brain"
@@ -40,7 +42,7 @@ class RetroCompanion:
         faces = {
             "Neutral": "(o_o)",
             "Happy": "(^ V ^)",
-            "Sad": "(;_;)",
+            "Unhappy": "(;_;)",
             "Angry": "(>_<)",
             "Bored": "(~_~)",
             "Confused": "(o.o)",
@@ -51,13 +53,14 @@ class RetroCompanion:
             "More_Gay": "(owo)",
             "Tired": "(=_=)",
             "Excited": "(*o*)",
-            "Stare": "(o  o)"
+            "Stare": "(o  o)",
+            "Sad": "(. n .)"
         }
 
         faces_blink = {
             "Neutral": "(-_-)",
             "Happy": "(-v-)",
-            "Sad": "(-_-)",
+            "Unhappy": "(-_-)",
             "Angry": "(-_-)",
             "Bored": "(-_-)",
             "Confused": "(-.-)",
@@ -68,23 +71,22 @@ class RetroCompanion:
             "More_Gay": "(-w-)",
             "Tired": "(- , -)",
             "Excited": "(-o-)",
-            "Stare": "(-  -)"
+            "Stare": "(-  -)",
+            "Sad": "(-n-)"
+
         }
 
-        # If in blink state, return face derived from mood,
-        # but from the faces_blink list,
-        # or return "(-_-)" as default in case of failure
-        if self.blink_state:
-            return faces_blink.get(self.mood, "(-_-)")
+        # Select random face depending on blink state
+        current_face = faces_blink.get(self.mood, "(-_-)") if self.blink_state else faces.get(self.mood, "(o_o)")
 
-        # Else, Just return corresponding face to mood,
-        # or return "(o_o)" as default in case of failure
-        return faces.get(self.mood, "(o_o)")
+        if bunny_ears_toggle:
+            return f"{bunny_ears}\n{current_face}"
+        return current_face
 
     def update_logic(self):
         """Simulates the companion 'thinking' and changing moods"""
         # Pick a random mood every 5 seconds
-        self.mood = random.choice(["Neutral", "Happy", "Sad", "Angry", "Bored", "Confused", "Shocked", "Tweaked", "Pleased", "Gay", "More_Gay", "Tired", "Excited", "Stare"])
+        self.mood = random.choice(["Neutral", "Happy", "Unhappy", "Angry", "Bored", "Confused", "Shocked", "Tweaked", "Pleased", "Gay", "More_Gay", "Tired", "Excited", "Stare", "Sad"])
         self.label.config(text=self.get_face())
 
         # Run again in 5 seconds

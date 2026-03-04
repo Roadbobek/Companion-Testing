@@ -19,10 +19,12 @@ class RetroCompanion:
     def __init__(self, root):
         self.root = root
         self.root.title("Companion")
+        # Get screen resolution
+        self.screen_resolution = (self.root.winfo_screenwidth(), self.root.winfo_screenheight())
         # Make the window stay on top and remove the border for a 'sprite' look
         self.root.attributes("-topmost", True)
         self.root.overrideredirect(True)
-        self.root.geometry("200x200+1700+360") # Window size + Position offset
+        self.root.geometry(f"200x200+{self.screen_resolution[0] - 400}+200") # Window size + Position offset
 
         # State variables
         self.mood = "Neutral"
@@ -32,17 +34,44 @@ class RetroCompanion:
         self.label = tk.Label(root, text="(o.o)", font=(face_font, 40), fg=face_colour, bg=background_colour, justify="center")
         self.label.pack(expand=True, fill="both")
 
+        # Binding mouse events to the whole window
+        self.root.bind("<Button-1>", self.start_move)
+        self.root.bind("<B1-Motion>", self.do_move)
+
         # Start the "Brain"
         self.update_logic()
         self.blink_loop()
 
-    def get_face(self):
-        """The 'Component' Map: Returns a string based on current state"""
+    def start_move(self, event):
+        """Record the mouse position when you first click"""
+        self.x = event.x
+        self.y = event.y
+        # Change face on click
+        self.label.config(text=self.get_face("Pleased"))
+
+    def do_move(self, event):
+        """Move the window based on how much the mouse has moved"""
+        # Calculate new coordinates
+        deltax = event.x - self.x
+        deltay = event.y - self.y
+        x = self.root.winfo_x() + deltax
+        y = self.root.winfo_y() + deltay
+        # Update window position
+        self.root.geometry(f"+{x}+{y}")
+        # Change face while moving
+        self.label.config(text=self.get_face("Angry"))
+
+    def get_face(self, override=None):
+        """The 'Component' Map: Returns a string based on current state
+        :param override: If 'override' is provided return passed
+        emotion instead of random one.
+        :return: String: The facial expression.
+        """
 
         faces = {
             "Neutral": "(o_o)",
             "Happy": "(^ V ^)",
-            "Unhappy": "(;_;)",
+            "Unhappy": "(; _ ;)",
             "Angry": "(>_<)",
             "Bored": "(~_~)",
             "Confused": "(o.o)",
@@ -82,8 +111,12 @@ class RetroCompanion:
 
         }
 
-        # Select random face depending on blink state
-        current_face = faces_blink.get(self.mood, "(-_-)") if self.blink_state else faces.get(self.mood, "(o_o)")
+        # If 'override' parameter is present return selected face
+        # Else select random face depending on blink state
+        if override:
+            current_face = faces_blink.get(override, "(-_-)") if self.blink_state else faces.get(override, "(o_o)")
+        else:
+            current_face = faces_blink.get(self.mood, "(-_-)") if self.blink_state else faces.get(self.mood, "(o_o)")
 
         if bunny_ears_toggle:
             return f"{bunny_ears}\n{current_face}"
